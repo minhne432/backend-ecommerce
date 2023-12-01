@@ -134,7 +134,14 @@ function makeOrdersService() {
   const getOrdersByUserId = async (user_id) => {
     try {
       const orders = await knex("orders")
-        .select("id", "fullname", "phone_number", "order_date", "status")
+        .select(
+          "id",
+          "fullname",
+          "phone_number",
+          "order_date",
+          "status",
+          "total_money"
+        )
         .where({ user_id });
 
       return orders;
