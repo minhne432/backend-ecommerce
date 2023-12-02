@@ -39,6 +39,7 @@ function makeContactsService() {
           "products.price",
           "products.thumbnail",
           "products.description",
+          "categories.id",
           "categories.name as categoryName"
         )
         .join("categories", "products.category_id", "categories.id")
@@ -65,6 +66,7 @@ function makeContactsService() {
         name: result.name,
         price: result.price,
         thumbnail: result.thumbnail,
+        category_id: result.id,
         description: result.description,
         categoryName: result.categoryName,
       }));
@@ -107,12 +109,24 @@ function makeContactsService() {
     return knex("products").where("id", id).del();
   }
 
+  async function getAllCategories() {
+    try {
+      const categories = await knex("categories").select("*");
+      // console.log(categories);
+      return categories;
+    } catch (error) {
+      console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
+      throw error;
+    }
+  }
+
   return {
     createProduct,
     getManyProducts,
     getProductById,
     updateProduct,
     deleteProduct,
+    getAllCategories,
   };
 }
 module.exports = makeContactsService;

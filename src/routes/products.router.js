@@ -20,17 +20,14 @@ router
 router
   .route("/:id")
   .get(productsController.getProduct)
-  .put(
-    _AuthMiddleWare.isAuth,
-    verifyRoles.isAdmin,
-    uploadCloud.single("image"),
-    productsController.updateProduct
-  )
+  .put(uploadCloud.single("image"), productsController.updateProduct)
   .delete(
     _AuthMiddleWare.isAuth,
     verifyRoles.isAdmin,
     productsController.deleteProduct
   )
   .all(methodNotAllowed);
+
+router.route("/categories/getall").get(productsController.getAllCategories);
 
 module.exports = router;

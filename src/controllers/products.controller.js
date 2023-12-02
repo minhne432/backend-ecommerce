@@ -91,10 +91,24 @@ function deleteProduct(req, res, next) {
   }
 }
 
+async function getAllCategories(req, res, next) {
+  try {
+    const productstService = makeProductsService();
+    const categories = await productstService.getAllCategories();
+    console.log(categories);
+    return res.send(categories);
+  } catch {
+    return next(
+      new ApiError(500, `Có lỗi trong quá trình lấy danh mục sản phẩm`)
+    );
+  }
+}
+
 module.exports = {
   createProduct,
   getProductsByFilter,
   getProduct,
   updateProduct,
   deleteProduct,
+  getAllCategories,
 };
